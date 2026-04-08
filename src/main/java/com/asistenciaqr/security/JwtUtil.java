@@ -12,7 +12,7 @@ public class JwtUtil {
 
     private final String SECRET = "mi_clave_super_secreta_123456789";
 
-    private Key getSigningKey() {
+    public Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
@@ -23,5 +23,12 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public void validateToken(String token) {
+        Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token);
     }
 }

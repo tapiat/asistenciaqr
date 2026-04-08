@@ -1,10 +1,9 @@
-public String login(LoginRequest request) {
-    Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+package com.asistenciaqr.dto;
 
-    if (!usuario.getPassword().equals(request.getPassword())) {
-        throw new RuntimeException("Credenciales inválidas");
-    }
+import lombok.Data;
 
-    return jwtUtil.generateToken(usuario.getEmail());
+@Data
+public class LoginRequest {
+    private String email;
+    private String password;
 }
